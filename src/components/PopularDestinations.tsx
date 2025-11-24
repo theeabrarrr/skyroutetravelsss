@@ -6,6 +6,7 @@ import istanbulImage from "@/assets/istanbul.jpg";
 import parisImage from "@/assets/paris.jpg";
 import maldivesImage from "@/assets/maldives.jpg";
 import newyorkImage from "@/assets/newyork.jpg";
+import { useParallax } from "@/hooks/use-parallax";
 
 const destinations = [
   {
@@ -46,6 +47,41 @@ const destinations = [
   },
 ];
 
+const DestinationCard = ({ destination, index }: { destination: typeof destinations[0], index: number }) => {
+  const { offset, elementRef } = useParallax(-0.15);
+
+  return (
+    <Card 
+      ref={elementRef}
+      className="overflow-hidden bg-card border-border hover:border-accent hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 group animate-fade-in-up"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <div className="relative overflow-hidden h-72">
+        <img 
+          src={destination.image}
+          alt={`${destination.city}, ${destination.country}`}
+          className="w-full h-full object-cover transition-transform duration-100 ease-out group-hover:scale-110"
+          style={{ transform: `translateY(${offset}px) scale(${offset ? 1 : 1})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-2xl font-bold text-white mb-1">{destination.city}</h3>
+          <p className="text-sm text-white/90 font-medium">{destination.country}</p>
+        </div>
+      </div>
+      <CardContent className="p-6">
+        <p className="text-muted-foreground leading-relaxed mb-6">{destination.description}</p>
+        <Button 
+          variant="outline" 
+          className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+        >
+          Explore This Destination
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
+
 const PopularDestinations = () => {
   return (
     <section id="deals" className="py-20 bg-background">
@@ -64,33 +100,7 @@ const PopularDestinations = () => {
         
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {destinations.map((destination, index) => (
-            <Card 
-              key={index} 
-              className="overflow-hidden bg-card border-border hover:border-accent hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 group animate-fade-in-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <div className="relative overflow-hidden h-72">
-                <img 
-                  src={destination.image}
-                  alt={`${destination.city}, ${destination.country}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500"></div>
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="text-2xl font-bold text-white mb-1">{destination.city}</h3>
-                  <p className="text-sm text-white/90 font-medium">{destination.country}</p>
-                </div>
-              </div>
-              <CardContent className="p-6">
-                <p className="text-muted-foreground leading-relaxed mb-6">{destination.description}</p>
-                <Button 
-                  variant="outline" 
-                  className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-                >
-                  Explore This Destination
-                </Button>
-              </CardContent>
-            </Card>
+            <DestinationCard key={index} destination={destination} index={index} />
           ))}
         </div>
       </div>
