@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -22,7 +22,15 @@ import heroImage from "@/assets/hero-airplane.jpg";
 import { useParallax } from "@/hooks/use-parallax";
 import { PassengerSelector, type PassengerCounts } from "@/components/PassengerSelector";
 import { toast } from "@/hooks/use-toast";
-import { AIRPORTS, type Airport } from "@/data/airports";
+import { supabase } from "@/integrations/supabase/client";
+
+type Airport = {
+  id: string;
+  iata_code: string;
+  name: string;
+  city: string;
+  country: string;
+};
 
 const Hero = () => {
   const { offset, elementRef } = useParallax(-0.3);
@@ -38,8 +46,47 @@ const Hero = () => {
     children: 0,
     infants: 0
   });
+  const [airportSearchQuery, setAirportSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<Airport[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
 
-  const handleGetQuote = () => {
+  // Debounced airport search
+  useEffect(() => {
+    const searchAirports = async () => {
+      if (airportSearchQuery.length < 2) {
+        setSearchResults([]);
+        setIsSearching(false);
+        return;
+      }
+
+      setIsSearching(true);
+
+      try {
+        const { data, error } = await supabase
+          .from('airports')
+          .select('id, iata_code, name, city, country')
+          .or(`iata_code.ilike.%${airportSearchQuery}%,city.ilike.%${airportSearchQuery}%,country.ilike.%${airportSearchQuery}%,name.ilike.%${airportSearchQuery}%`)
+          .order('city')
+          .limit(50);
+
+        if (error) throw error;
+        setSearchResults(data || []);
+      } catch (error) {
+        console.error('Airport search error:', error);
+        setSearchResults([]);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      searchAirports();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [airportSearchQuery]);
+
+  const handleGetQuote = async () => {
     // Validation
     if (!toLocation) {
       toast({
@@ -98,7 +145,7 @@ const Hero = () => {
     let message = `Hi, I need a flight quote.\n\n`;
     message += `Trip Type: ${tripTypeText}\n`;
     message += `From: ${fromLocation}\n`;
-    message += `To: ${toLocation.city} (${toLocation.code}) - ${toLocation.country}\n`;
+    message += `To: ${toLocation.city} (${toLocation.iata_code}) - ${toLocation.country}\n`;
     message += `Departure: ${formatDate(departureDate)}\n`;
     
     if (tripType === 'round-trip' && returnDate) {
@@ -106,6 +153,32 @@ const Hero = () => {
     }
     
     message += `Passengers: ${passengerText}`;
+
+    // Save lead to database
+    try {
+      const { error: leadError } = await supabase
+        .from('booking_leads')
+        .insert({
+          trip_type: tripType,
+          from_location: fromLocation,
+          to_location: toLocation.city,
+          to_airport_id: toLocation.id,
+          departure_date: departureDate,
+          return_date: tripType === 'round-trip' ? returnDate : null,
+          adults: passengerData.adults,
+          children: passengerData.children,
+          infants: passengerData.infants,
+          whatsapp_message: message,
+          whatsapp_sent: true,
+          whatsapp_sent_at: new Date().toISOString(),
+        });
+
+      if (leadError) {
+        console.error('Error saving lead:', leadError);
+      }
+    } catch (error) {
+      console.error('Unexpected error saving lead:', error);
+    }
 
     // Encode message for URL
     const encodedMessage = encodeURIComponent(message);
@@ -116,6 +189,11 @@ const Hero = () => {
     // Open WhatsApp
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
     window.open(whatsappURL, '_blank');
+
+    toast({
+      title: "Quote Request Sent!",
+      description: "Opening WhatsApp... We'll get back to you shortly.",
+    });
   };
 
   return (
@@ -182,46 +260,64 @@ const Hero = () => {
                         aria-expanded={destinationOpen}
                         className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
                       >
-                        {toLocation ? `${toLocation.city} (${toLocation.code})` : "Select destination..."}
+                        {toLocation ? `${toLocation.city} (${toLocation.iata_code})` : "Select destination..."}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[400px] p-0 bg-background border-border z-50" align="start">
-                      <Command className="bg-background">
-                        <CommandInput placeholder="Search city, airport, or code..." className="h-9" />
+                      <Command className="bg-background" shouldFilter={false}>
+                        <CommandInput 
+                          placeholder="Search city, airport, or code..." 
+                          className="h-9"
+                          value={airportSearchQuery}
+                          onValueChange={setAirportSearchQuery}
+                        />
                         <CommandList className="max-h-[300px]">
-                          <CommandEmpty>No airport found.</CommandEmpty>
-                          <CommandGroup>
-                            {AIRPORTS.map((airport) => (
-                              <CommandItem
-                                key={airport.code}
-                                value={`${airport.city} ${airport.code} ${airport.country} ${airport.airport}`.toLowerCase()}
-                                onSelect={() => {
-                                  setToLocation(airport);
-                                  setDestinationOpen(false);
-                                }}
-                                className="cursor-pointer"
-                              >
-                                <Check
-                                  className={cn(
-                                    "mr-2 h-4 w-4 shrink-0",
-                                    toLocation?.code === airport.code ? "opacity-100" : "opacity-0"
-                                  )}
-                                />
-                                <div className="flex flex-col">
-                                  <div className="flex items-center gap-2">
-                                    <span className="font-semibold">{airport.city}</span>
-                                    <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
-                                      {airport.code}
+                          {isSearching ? (
+                            <div className="flex items-center justify-center py-8">
+                              <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                              <span className="ml-2 text-sm text-muted-foreground">Searching airports...</span>
+                            </div>
+                          ) : searchResults.length === 0 ? (
+                            <CommandEmpty>
+                              {airportSearchQuery.length < 2 
+                                ? "Type at least 2 characters to search..." 
+                                : "No airports found."}
+                            </CommandEmpty>
+                          ) : (
+                            <CommandGroup>
+                              {searchResults.map((airport) => (
+                                <CommandItem
+                                  key={airport.id}
+                                  value={airport.iata_code}
+                                  onSelect={() => {
+                                    setToLocation(airport);
+                                    setDestinationOpen(false);
+                                    setAirportSearchQuery('');
+                                  }}
+                                  className="cursor-pointer"
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4 shrink-0",
+                                      toLocation?.id === airport.id ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  <div className="flex flex-col">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-semibold">{airport.city}</span>
+                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                                        {airport.iata_code}
+                                      </span>
+                                    </div>
+                                    <span className="text-xs text-muted-foreground">
+                                      {airport.name}, {airport.country}
                                     </span>
                                   </div>
-                                  <span className="text-xs text-muted-foreground">
-                                    {airport.airport}, {airport.country}
-                                  </span>
-                                </div>
-                              </CommandItem>
-                            ))}
-                          </CommandGroup>
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          )}
                         </CommandList>
                       </Command>
                     </PopoverContent>
