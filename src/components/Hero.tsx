@@ -18,7 +18,7 @@ const Hero = () => {
           transform: `translateY(${offset}px)`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-secondary/90 via-secondary/80 to-secondary/90"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-secondary/10 to-secondary/20"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10 py-20">
