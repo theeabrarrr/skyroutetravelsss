@@ -60,7 +60,7 @@ const DestinationCard = ({ destination, index }: { destination: typeof destinati
         <img 
           src={destination.image}
           alt={`${destination.city}, ${destination.country}`}
-          className="w-full h-full object-cover transition-transform duration-100 ease-out group-hover:scale-110"
+          className="w-full h-full min-h-full object-cover transition-transform duration-100 ease-out group-hover:scale-110"
           style={{ transform: `translateY(${offset}px) scale(${offset ? 1 : 1})` }}
         />
         <div className="absolute bottom-4 left-4 right-4">
