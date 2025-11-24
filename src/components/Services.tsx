@@ -1,26 +1,26 @@
-import { Plane, Globe, CreditCard, Hotel } from "lucide-react";
+import { Shield, CreditCard, FileText, Hotel } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
   {
-    icon: Plane,
-    title: "Flight Tickets",
-    description: "Best deals on international flights.",
-  },
-  {
-    icon: Globe,
-    title: "Visa Assistance",
-    description: "Expert guidance for visit and work visas.",
+    icon: Shield,
+    title: "Travel Insurance",
+    description: "Comprehensive coverage for your travels with competitive rates and reliable support.",
   },
   {
     icon: CreditCard,
-    title: "Online PAK ID/Passport",
-    description: "Hassle-free renewal and issuance services.",
+    title: "Pak ID Card",
+    description: "Quick and hassle-free NADRA ID card services including new issuance and renewals.",
+  },
+  {
+    icon: FileText,
+    title: "Pak Passport",
+    description: "Fast-track passport services for new applications, renewals, and urgent processing.",
   },
   {
     icon: Hotel,
-    title: "Travel Insurance & Hotels",
-    description: "Secure your trip and find the best stays.",
+    title: "Hotel Booking",
+    description: "Access to the best hotel deals worldwide with secure booking and instant confirmation.",
   },
 ];
 
@@ -30,7 +30,7 @@ const Services = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-            Core Services
+            Our Service
           </p>
           <h2 className="text-3xl md:text-4xl font-bold">Our Premium Services</h2>
         </div>
