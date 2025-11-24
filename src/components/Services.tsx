@@ -1,4 +1,4 @@
-import { Shield, CreditCard, FileText, Hotel } from "lucide-react";
+import { Shield, CreditCard, FileText, Hotel, FileCheck, Ticket } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 
 const services = [
@@ -22,6 +22,16 @@ const services = [
     title: "Hotel Booking",
     description: "Access to the best hotel deals worldwide with secure booking and instant confirmation.",
   },
+  {
+    icon: FileCheck,
+    title: "Visa Applications",
+    description: "Expert assistance with visa applications for all destinations with guaranteed approval support.",
+  },
+  {
+    icon: Ticket,
+    title: "Tickets",
+    description: "Best-priced flight tickets worldwide with flexible booking options and 24/7 customer support.",
+  },
 ];
 
 const Services = () => {
@@ -35,7 +45,7 @@ const Services = () => {
           <h2 className="text-3xl md:text-5xl font-bold text-foreground">Our Premium Services</h2>
         </div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <Card 
               key={index} 
