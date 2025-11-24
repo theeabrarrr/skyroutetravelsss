@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface MobileMenuProps {
@@ -62,6 +62,21 @@ const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             >
               Contact
             </a>
+
+            <Button 
+              asChild
+              className="mt-6 bg-accent text-accent-foreground hover:bg-accent/90 font-semibold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300"
+            >
+              <a 
+                href="https://wa.me/27742718975" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={onClose}
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                WhatsApp Us
+              </a>
+            </Button>
           </nav>
         </div>
       </div>
