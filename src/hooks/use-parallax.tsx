@@ -19,7 +19,10 @@ export const useParallax = (speed: number = 0.5) => {
             
             // Only apply parallax when element is in viewport
             if (scrolled + windowHeight > elementTop && scrolled < elementTop + elementHeight) {
-              const parallaxOffset = (scrolled - elementTop + windowHeight) * speed;
+              let parallaxOffset = (scrolled - elementTop + windowHeight) * speed;
+              // Clamp offset to prevent extreme movements
+              const maxOffset = speed < 0 ? -200 : 200;
+              parallaxOffset = Math.max(Math.min(parallaxOffset, Math.abs(maxOffset)), -Math.abs(maxOffset));
               setOffset(parallaxOffset);
             }
           }

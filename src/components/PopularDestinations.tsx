@@ -6,7 +6,7 @@ import istanbulImage from "@/assets/istanbul.jpg";
 import parisImage from "@/assets/paris.jpg";
 import maldivesImage from "@/assets/maldives.jpg";
 import newyorkImage from "@/assets/newyork.jpg";
-import { useParallax } from "@/hooks/use-parallax";
+
 
 const destinations = [
   {
@@ -48,11 +48,8 @@ const destinations = [
 ];
 
 const DestinationCard = ({ destination, index }: { destination: typeof destinations[0], index: number }) => {
-  const { offset, elementRef } = useParallax(-0.15);
-
   return (
     <Card 
-      ref={elementRef}
       className="overflow-hidden bg-card border-border hover:border-accent hover:shadow-2xl hover:shadow-accent/20 transition-all duration-500 group animate-fade-in-up"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
@@ -60,8 +57,7 @@ const DestinationCard = ({ destination, index }: { destination: typeof destinati
         <img 
           src={destination.image}
           alt={`${destination.city}, ${destination.country}`}
-          className="w-full h-full min-h-full object-cover transition-transform duration-100 ease-out group-hover:scale-110"
-          style={{ transform: `translateY(${offset}px) scale(${offset ? 1 : 1})` }}
+          className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-110"
         />
         <div className="absolute bottom-4 left-4 right-4">
           <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{destination.city}</h3>
