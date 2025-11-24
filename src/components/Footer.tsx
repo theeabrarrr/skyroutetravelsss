@@ -8,18 +8,18 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-accent mb-4">Sky Route Travel</h3>
+            <h3 className="text-2xl font-bold text-accent mb-4">Sky Route Travel & Tours</h3>
             <p className="text-foreground/80 leading-relaxed">
               Your trusted partner for seamless travel experiences from South Africa to the world. We make your journey extraordinary.
             </p>
             <div className="space-y-3 pt-4">
               <div className="flex items-center gap-3 text-foreground/80 hover:text-accent transition-colors">
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
-                <span>+27 74 271 9875</span>
+                <span>+27 74 271 8975</span>
               </div>
               <div className="flex items-center gap-3 text-foreground/80 hover:text-accent transition-colors">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
-                <span>skyroutetours@gmail.com</span>
+                <span>skyroutetraveltours@gmail.com</span>
               </div>
               <div className="flex items-center gap-3 text-foreground/80 hover:text-accent transition-colors">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0" />
