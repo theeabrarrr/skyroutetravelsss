@@ -38,7 +38,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
           {features.map((feature, index) => <Card key={index} className="bg-card border-border hover:border-accent transition-all duration-500 hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-2 group animate-fade-in-up" style={{
           animationDelay: `${index * 0.15}s`
         }}>
