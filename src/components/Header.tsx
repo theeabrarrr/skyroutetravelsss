@@ -40,9 +40,18 @@ const Header = () => {
             </nav>
             
             <div className="flex items-center gap-3">
-              <Button className="hidden sm:flex bg-accent text-accent-foreground hover:bg-accent/90 font-semibold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300">
-                <MessageCircle className="w-4 h-4 mr-2" />
-                WhatsApp Us
+              <Button 
+                asChild
+                className="hidden sm:flex bg-accent text-accent-foreground hover:bg-accent/90 font-semibold hover:shadow-lg hover:shadow-accent/50 transition-all duration-300"
+              >
+                <a 
+                  href="https://wa.me/27742718975" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  <MessageCircle className="w-4 h-4 mr-2" />
+                  WhatsApp Us
+                </a>
               </Button>
               
               <Button
