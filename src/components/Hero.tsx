@@ -94,10 +94,8 @@ const Hero = () => {
     // Encode message for URL
     const encodedMessage = encodeURIComponent(message);
     
-    // Replace with your actual WhatsApp business number
-    // Format: country code + number (no + sign, no spaces)
-    // Example: 27123456789 for South Africa
-    const whatsappNumber = '27123456789'; // REPLACE WITH YOUR ACTUAL NUMBER
+    // WhatsApp business number
+    const whatsappNumber = '27742718975';
     
     // Open WhatsApp
     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
