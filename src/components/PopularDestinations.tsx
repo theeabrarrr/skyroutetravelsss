@@ -63,10 +63,9 @@ const DestinationCard = ({ destination, index }: { destination: typeof destinati
           className="w-full h-full object-cover transition-transform duration-100 ease-out group-hover:scale-110"
           style={{ transform: `translateY(${offset}px) scale(${offset ? 1 : 1})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-40 group-hover:opacity-50 transition-opacity duration-500"></div>
         <div className="absolute bottom-4 left-4 right-4">
-          <h3 className="text-2xl font-bold text-white mb-1">{destination.city}</h3>
-          <p className="text-sm text-white/90 font-medium">{destination.country}</p>
+          <h3 className="text-2xl font-bold text-white mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{destination.city}</h3>
+          <p className="text-sm text-white/90 font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">{destination.country}</p>
         </div>
       </div>
       <CardContent className="p-6">
