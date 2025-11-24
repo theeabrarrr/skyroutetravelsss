@@ -30,9 +30,12 @@ const WhyChooseUs = () => {
           <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-2">
             Why Choose Us
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
-            SKY ROUTE TRAVEL & TOURS               
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-2">
+            YOUR TRUSTED TRAVEL PARTNER
           </h2>
+          <h3 className="text-2xl md:text-3xl font-display font-bold text-primary mb-4">
+            SKY ROUTE TRAVEL & TOURS
+          </h3>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             We combine expertise, reliability, and exceptional service to make your travel dreams a reality.
           </p>
