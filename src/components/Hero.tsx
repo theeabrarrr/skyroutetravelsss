@@ -15,7 +15,8 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out"
         style={{ 
           backgroundImage: `url(${heroImage})`,
-          transform: `translateY(${offset}px)`,
+          transform: `translateY(${offset}px) scale(1.3)`,
+          transformOrigin: 'center center',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-secondary/10 to-secondary/20"></div>
