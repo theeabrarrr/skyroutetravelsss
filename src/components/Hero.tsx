@@ -22,26 +22,14 @@ import heroImage from "@/assets/hero-airplane.jpg";
 import { useParallax } from "@/hooks/use-parallax";
 import { PassengerSelector, type PassengerCounts } from "@/components/PassengerSelector";
 import { toast } from "@/hooks/use-toast";
-
-const POPULAR_DESTINATIONS = [
-  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia",
-  "Pakistan", "India", "Turkey", "Egypt", "France", "Germany",
-  "Italy", "Spain", "Netherlands", "Belgium", "Switzerland",
-  "Austria", "Greece", "Portugal", "Canada", "Australia",
-  "New Zealand", "Japan", "China", "Singapore", "Thailand",
-  "Malaysia", "Indonesia", "South Korea", "Hong Kong", "Qatar",
-  "Bahrain", "Kuwait", "Oman", "Jordan", "Lebanon",
-  "Morocco", "Tunisia", "Kenya", "Tanzania", "Mauritius",
-  "Maldives", "Sri Lanka", "Bangladesh", "Brazil", "Argentina",
-  "Mexico", "Chile", "Peru", "Colombia", "Costa Rica"
-];
+import { AIRPORTS, type Airport } from "@/data/airports";
 
 const Hero = () => {
   const { offset, elementRef } = useParallax(-0.3);
   
   const [tripType, setTripType] = useState<'one-way' | 'round-trip' | 'multi-city'>('round-trip');
   const [fromLocation, setFromLocation] = useState('South Africa');
-  const [toLocation, setToLocation] = useState('');
+  const [toLocation, setToLocation] = useState<Airport | null>(null);
   const [destinationOpen, setDestinationOpen] = useState(false);
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
@@ -53,10 +41,10 @@ const Hero = () => {
 
   const handleGetQuote = () => {
     // Validation
-    if (!toLocation.trim()) {
+    if (!toLocation) {
       toast({
         title: "Destination Required",
-        description: "Please enter a destination",
+        description: "Please select a destination airport",
         variant: "destructive"
       });
       return;
@@ -110,7 +98,7 @@ const Hero = () => {
     let message = `Hi, I need a flight quote.\n\n`;
     message += `Trip Type: ${tripTypeText}\n`;
     message += `From: ${fromLocation}\n`;
-    message += `To: ${toLocation}\n`;
+    message += `To: ${toLocation.city} (${toLocation.code}) - ${toLocation.country}\n`;
     message += `Departure: ${formatDate(departureDate)}\n`;
     
     if (tripType === 'round-trip' && returnDate) {
@@ -194,33 +182,43 @@ const Hero = () => {
                         aria-expanded={destinationOpen}
                         className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
                       >
-                        {toLocation || "Select destination..."}
+                        {toLocation ? `${toLocation.city} (${toLocation.code})` : "Select destination..."}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-full p-0 bg-background border-border" align="start">
+                    <PopoverContent className="w-[400px] p-0 bg-background border-border z-50" align="start">
                       <Command className="bg-background">
-                        <CommandInput placeholder="Search country..." className="h-9" />
-                        <CommandList>
-                          <CommandEmpty>No country found.</CommandEmpty>
+                        <CommandInput placeholder="Search city, airport, or code..." className="h-9" />
+                        <CommandList className="max-h-[300px]">
+                          <CommandEmpty>No airport found.</CommandEmpty>
                           <CommandGroup>
-                            {POPULAR_DESTINATIONS.map((country) => (
+                            {AIRPORTS.map((airport) => (
                               <CommandItem
-                                key={country}
-                                value={country}
-                                onSelect={(currentValue) => {
-                                  setToLocation(currentValue === toLocation.toLowerCase() ? "" : country);
+                                key={airport.code}
+                                value={`${airport.city} ${airport.code} ${airport.country} ${airport.airport}`.toLowerCase()}
+                                onSelect={() => {
+                                  setToLocation(airport);
                                   setDestinationOpen(false);
                                 }}
                                 className="cursor-pointer"
                               >
                                 <Check
                                   className={cn(
-                                    "mr-2 h-4 w-4",
-                                    toLocation === country ? "opacity-100" : "opacity-0"
+                                    "mr-2 h-4 w-4 shrink-0",
+                                    toLocation?.code === airport.code ? "opacity-100" : "opacity-0"
                                   )}
                                 />
-                                {country}
+                                <div className="flex flex-col">
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-semibold">{airport.city}</span>
+                                    <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                                      {airport.code}
+                                    </span>
+                                  </div>
+                                  <span className="text-xs text-muted-foreground">
+                                    {airport.airport}, {airport.country}
+                                  </span>
+                                </div>
                               </CommandItem>
                             ))}
                           </CommandGroup>
