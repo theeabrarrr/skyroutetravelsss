@@ -4,15 +4,18 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import heroImage from "@/assets/hero-airplane.jpg";
+import { useParallax } from "@/hooks/use-parallax";
 
 const Hero = () => {
+  const { offset, elementRef } = useParallax(-0.3);
+
   return (
-    <section className="relative min-h-[700px] flex items-center justify-center overflow-hidden">
+    <section ref={elementRef} className="relative min-h-[700px] flex items-center justify-center overflow-hidden">
       <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out"
         style={{ 
           backgroundImage: `url(${heroImage})`,
-          backgroundAttachment: "fixed",
+          transform: `translateY(${offset}px)`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80"></div>
