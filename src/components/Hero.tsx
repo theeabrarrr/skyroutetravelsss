@@ -142,7 +142,7 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+              <Button variant="outline" className="border-primary text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent">
                 Learn More About Us
               </Button>
             </div>

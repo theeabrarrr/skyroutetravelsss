@@ -9,58 +9,58 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Premium Gold, Blue & White Theme - 60-30-10 Rule */
-    /* 60% Navy Blue - Primary backgrounds and elements */
-    --background: 210 100% 98%;
-    --foreground: 215 100% 15%;
+    /* 60% White - Primary backgrounds and elements */
+    --background: 0 0% 100%;
+    --foreground: 210 100% 19%;
 
     --card: 0 0% 100%;
-    --card-foreground: 215 100% 15%;
+    --card-foreground: 210 100% 19%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 215 100% 15%;
+    --popover-foreground: 210 100% 19%;
 
-    /* 60% Navy Blue - Main brand color */
-    --primary: 210 100% 20%;
+    /* 30% Deep Blue - Main brand color (#002D62) */
+    --primary: 210 100% 19%;
     --primary-foreground: 0 0% 100%;
 
-    /* 30% Light Blue/White - Secondary elements */
-    --secondary: 210 50% 92%;
-    --secondary-foreground: 215 100% 15%;
+    /* 30% Deep Blue - Secondary elements */
+    --secondary: 210 100% 19%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 30% 90%;
-    --muted-foreground: 215 50% 35%;
+    --muted-foreground: 210 50% 35%;
 
-    /* 10% Premium Gold - Accent color */
-    --accent: 43 95% 58%;
-    --accent-foreground: 215 100% 15%;
+    /* 10% Premium Gold - Accent color (#D4AF37) */
+    --accent: 46 65% 52%;
+    --accent-foreground: 210 100% 19%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 210 30% 85%;
+    --border: 210 20% 85%;
     --input: 0 0% 100%;
-    --ring: 43 95% 58%;
+    --ring: 46 65% 52%;
 
     --radius: 0.75rem;
     
     /* Custom tokens */
-    --gold: 43 95% 58%;
-    --gold-glow: 43 100% 65%;
-    --navy-blue: 210 100% 20%;
-    --light-blue: 210 50% 92%;
+    --gold: 46 65% 52%;
+    --gold-glow: 46 75% 60%;
+    --navy-blue: 210 100% 19%;
+    --light-blue: 0 0% 98%;
 
-    --sidebar-background: 210 100% 20%;
+    --sidebar-background: 210 100% 19%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 210 100% 20%;
+    --sidebar-primary: 210 100% 19%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 43 95% 58%;
-    --sidebar-accent-foreground: 215 100% 15%;
+    --sidebar-accent: 46 65% 52%;
+    --sidebar-accent-foreground: 210 100% 19%;
     --sidebar-border: 210 50% 30%;
-    --sidebar-ring: 43 95% 58%;
+    --sidebar-ring: 46 65% 52%;
   }
 
   .dark {
-    --background: 210 100% 20%;
+    --background: 210 100% 19%;
     --foreground: 0 0% 100%;
 
     --card: 215 100% 25%;
@@ -69,7 +69,7 @@ All colors MUST be HSL.
     --popover: 215 100% 25%;
     --popover-foreground: 0 0% 100%;
 
-    --primary: 210 100% 20%;
+    --primary: 210 100% 19%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 50% 30%;
@@ -78,24 +78,24 @@ All colors MUST be HSL.
     --muted: 210 40% 35%;
     --muted-foreground: 210 20% 80%;
 
-    --accent: 43 95% 58%;
-    --accent-foreground: 215 100% 15%;
+    --accent: 46 65% 52%;
+    --accent-foreground: 210 100% 19%;
 
     --destructive: 0 63% 50%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 210 50% 35%;
     --input: 215 100% 25%;
-    --ring: 43 95% 58%;
+    --ring: 46 65% 52%;
     
-    --sidebar-background: 210 100% 20%;
+    --sidebar-background: 210 100% 19%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 210 100% 20%;
+    --sidebar-primary: 210 100% 19%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 43 95% 58%;
-    --sidebar-accent-foreground: 215 100% 15%;
+    --sidebar-accent: 46 65% 52%;
+    --sidebar-accent-foreground: 210 100% 19%;
     --sidebar-border: 210 50% 30%;
-    --sidebar-ring: 43 95% 58%;
+    --sidebar-ring: 46 65% 52%;
   }
 }
 

@@ -40,7 +40,7 @@ const FeaturedDeals = () => {
         
         <div className="grid md:grid-cols-3 gap-6">
           {deals.map((deal, index) => (
-            <Card key={index} className="overflow-hidden hover:shadow-xl transition-shadow">
+            <Card key={index} className="overflow-hidden hover:shadow-xl hover:shadow-accent/20 hover:border-accent transition-all duration-300">
               <div className="relative">
                 <img 
                   src={deal.image} 
@@ -56,7 +56,7 @@ const FeaturedDeals = () => {
                 <p className="text-sm text-muted-foreground">{deal.description}</p>
               </CardContent>
               <CardFooter className="px-6 pb-6">
-                <Button variant="outline" className="w-full">
+                <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
                   View Deal
                 </Button>
               </CardFooter>
