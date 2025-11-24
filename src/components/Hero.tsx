@@ -1,13 +1,40 @@
 import { useState } from "react";
-import { MapPin, Calendar, Plane, CheckCircle2, Star, Award } from "lucide-react";
+import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import heroImage from "@/assets/hero-airplane.jpg";
 import { useParallax } from "@/hooks/use-parallax";
 import { PassengerSelector, type PassengerCounts } from "@/components/PassengerSelector";
 import { toast } from "@/hooks/use-toast";
+
+const POPULAR_DESTINATIONS = [
+  "United States", "United Kingdom", "United Arab Emirates", "Saudi Arabia",
+  "Pakistan", "India", "Turkey", "Egypt", "France", "Germany",
+  "Italy", "Spain", "Netherlands", "Belgium", "Switzerland",
+  "Austria", "Greece", "Portugal", "Canada", "Australia",
+  "New Zealand", "Japan", "China", "Singapore", "Thailand",
+  "Malaysia", "Indonesia", "South Korea", "Hong Kong", "Qatar",
+  "Bahrain", "Kuwait", "Oman", "Jordan", "Lebanon",
+  "Morocco", "Tunisia", "Kenya", "Tanzania", "Mauritius",
+  "Maldives", "Sri Lanka", "Bangladesh", "Brazil", "Argentina",
+  "Mexico", "Chile", "Peru", "Colombia", "Costa Rica"
+];
 
 const Hero = () => {
   const { offset, elementRef } = useParallax(-0.3);
@@ -15,6 +42,7 @@ const Hero = () => {
   const [tripType, setTripType] = useState<'one-way' | 'round-trip' | 'multi-city'>('round-trip');
   const [fromLocation, setFromLocation] = useState('South Africa');
   const [toLocation, setToLocation] = useState('');
+  const [destinationOpen, setDestinationOpen] = useState(false);
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
   const [passengerData, setPassengerData] = useState<PassengerCounts>({
@@ -158,13 +186,48 @@ const Hero = () => {
                     <MapPin className="w-4 h-4 text-primary" />
                     To (Worldwide)
                   </label>
-                  <Input
-                    type="text"
-                    placeholder="Enter any destination..."
-                    value={toLocation}
-                    onChange={(e) => setToLocation(e.target.value)}
-                    className="bg-background border-border focus:border-primary transition-colors"
-                  />
+                  <Popover open={destinationOpen} onOpenChange={setDestinationOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={destinationOpen}
+                        className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
+                      >
+                        {toLocation || "Select destination..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0 bg-background border-border" align="start">
+                      <Command className="bg-background">
+                        <CommandInput placeholder="Search country..." className="h-9" />
+                        <CommandList>
+                          <CommandEmpty>No country found.</CommandEmpty>
+                          <CommandGroup>
+                            {POPULAR_DESTINATIONS.map((country) => (
+                              <CommandItem
+                                key={country}
+                                value={country}
+                                onSelect={(currentValue) => {
+                                  setToLocation(currentValue === toLocation.toLowerCase() ? "" : country);
+                                  setDestinationOpen(false);
+                                }}
+                                className="cursor-pointer"
+                              >
+                                <Check
+                                  className={cn(
+                                    "mr-2 h-4 w-4",
+                                    toLocation === country ? "opacity-100" : "opacity-0"
+                                  )}
+                                />
+                                {country}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </div>
               </div>
               
