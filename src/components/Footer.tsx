@@ -1,6 +1,7 @@
-import { Plane, Facebook, Instagram, Twitter, Mail, Phone, Send } from "lucide-react";
+import { Facebook, Instagram, Twitter, Mail, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   return (
@@ -8,14 +9,8 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center border-2 border-accent">
-                <Plane className="w-5 h-5 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold">Sky Route</h3>
-                <p className="text-xs opacity-90">Travel & Tours</p>
-              </div>
+            <div className="mb-4">
+              <img src={logo} alt="Sky Route Travel & Tours" className="h-16 w-auto" />
             </div>
             <p className="text-sm opacity-80 leading-relaxed">
               Sky Route Travel & Tours is a contem luxurity and 
