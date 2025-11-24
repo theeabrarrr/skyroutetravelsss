@@ -1,29 +1,26 @@
-import { useState } from "react";
 import { Users, Plus, Minus, Baby } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-interface PassengerCounts {
+export interface PassengerCounts {
   infants: number;
   children: number;
   adults: number;
 }
 
-export const PassengerSelector = () => {
-  const [passengers, setPassengers] = useState<PassengerCounts>({
-    infants: 0,
-    children: 0,
-    adults: 1,
-  });
+interface PassengerSelectorProps {
+  passengers: PassengerCounts;
+  onChange: (passengers: PassengerCounts) => void;
+}
 
+export const PassengerSelector = ({ passengers, onChange }: PassengerSelectorProps) => {
   const updateCount = (type: keyof PassengerCounts, increment: boolean) => {
-    setPassengers((prev) => {
-      const newCount = increment ? prev[type] + 1 : prev[type] - 1;
-      return {
-        ...prev,
-        [type]: Math.max(type === "adults" ? 1 : 0, Math.min(9, newCount)),
-      };
-    });
+    const newCount = increment ? passengers[type] + 1 : passengers[type] - 1;
+    const updatedPassengers = {
+      ...passengers,
+      [type]: Math.max(type === "adults" ? 1 : 0, Math.min(9, newCount)),
+    };
+    onChange(updatedPassengers);
   };
 
   const totalPassengers = passengers.infants + passengers.children + passengers.adults;
