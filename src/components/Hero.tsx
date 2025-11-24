@@ -36,8 +36,9 @@ const Hero = () => {
   const { offset, elementRef } = useParallax(-0.3);
   
   const [tripType, setTripType] = useState<'one-way' | 'round-trip' | 'multi-city'>('round-trip');
-  const [fromLocation, setFromLocation] = useState('South Africa');
+  const [fromLocation, setFromLocation] = useState<Airport | null>(null);
   const [toLocation, setToLocation] = useState<Airport | null>(null);
+  const [originOpen, setOriginOpen] = useState(false);
   const [destinationOpen, setDestinationOpen] = useState(false);
   const [departureDate, setDepartureDate] = useState('');
   const [returnDate, setReturnDate] = useState('');
@@ -46,36 +47,40 @@ const Hero = () => {
     children: 0,
     infants: 0
   });
-  const [airportSearchQuery, setAirportSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<Airport[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [fromSearchQuery, setFromSearchQuery] = useState('');
+  const [fromSearchResults, setFromSearchResults] = useState<Airport[]>([]);
+  const [isFromSearching, setIsFromSearching] = useState(false);
+  
+  const [toSearchQuery, setToSearchQuery] = useState('');
+  const [toSearchResults, setToSearchResults] = useState<Airport[]>([]);
+  const [isToSearching, setIsToSearching] = useState(false);
 
-  // Debounced airport search
+  // Debounced airport search for "From" field
   useEffect(() => {
     const searchAirports = async () => {
-      if (airportSearchQuery.length < 2) {
-        setSearchResults([]);
-        setIsSearching(false);
+      if (fromSearchQuery.length < 2) {
+        setFromSearchResults([]);
+        setIsFromSearching(false);
         return;
       }
 
-      setIsSearching(true);
+      setIsFromSearching(true);
 
       try {
         const { data, error } = await supabase
           .from('airports')
           .select('id, iata_code, name, city, country')
-          .or(`iata_code.ilike.%${airportSearchQuery}%,city.ilike.%${airportSearchQuery}%,country.ilike.%${airportSearchQuery}%,name.ilike.%${airportSearchQuery}%`)
+          .or(`iata_code.ilike.%${fromSearchQuery}%,city.ilike.%${fromSearchQuery}%,country.ilike.%${fromSearchQuery}%,name.ilike.%${fromSearchQuery}%`)
           .order('city')
           .limit(50);
 
         if (error) throw error;
-        setSearchResults(data || []);
+        setFromSearchResults(data || []);
       } catch (error) {
         console.error('Airport search error:', error);
-        setSearchResults([]);
+        setFromSearchResults([]);
       } finally {
-        setIsSearching(false);
+        setIsFromSearching(false);
       }
     };
 
@@ -84,10 +89,54 @@ const Hero = () => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, [airportSearchQuery]);
+  }, [fromSearchQuery]);
+
+  // Debounced airport search for "To" field
+  useEffect(() => {
+    const searchAirports = async () => {
+      if (toSearchQuery.length < 2) {
+        setToSearchResults([]);
+        setIsToSearching(false);
+        return;
+      }
+
+      setIsToSearching(true);
+
+      try {
+        const { data, error } = await supabase
+          .from('airports')
+          .select('id, iata_code, name, city, country')
+          .or(`iata_code.ilike.%${toSearchQuery}%,city.ilike.%${toSearchQuery}%,country.ilike.%${toSearchQuery}%,name.ilike.%${toSearchQuery}%`)
+          .order('city')
+          .limit(50);
+
+        if (error) throw error;
+        setToSearchResults(data || []);
+      } catch (error) {
+        console.error('Airport search error:', error);
+        setToSearchResults([]);
+      } finally {
+        setIsToSearching(false);
+      }
+    };
+
+    const timer = setTimeout(() => {
+      searchAirports();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [toSearchQuery]);
 
   const handleGetQuote = async () => {
     // Validation
+    if (!fromLocation) {
+      toast({
+        title: "Origin Required",
+        description: "Please select your departure airport",
+        variant: "destructive"
+      });
+      return;
+    }
     if (!toLocation) {
       toast({
         title: "Destination Required",
@@ -144,7 +193,7 @@ const Hero = () => {
     // Build WhatsApp message
     let message = `Hi, I need a flight quote.\n\n`;
     message += `Trip Type: ${tripTypeText}\n`;
-    message += `From: ${fromLocation}\n`;
+    message += `From: ${fromLocation.city} (${fromLocation.iata_code}) - ${fromLocation.country}\n`;
     message += `To: ${toLocation.city} (${toLocation.iata_code}) - ${toLocation.country}\n`;
     message += `Departure: ${formatDate(departureDate)}\n`;
     
@@ -160,7 +209,8 @@ const Hero = () => {
         .from('booking_leads')
         .insert({
           trip_type: tripType,
-          from_location: fromLocation,
+          from_location: fromLocation.city,
+          from_airport_id: fromLocation.id,
           to_location: toLocation.city,
           to_airport_id: toLocation.id,
           departure_date: departureDate,
@@ -236,15 +286,78 @@ const Hero = () => {
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
                     <MapPin className="w-4 h-4 text-primary" />
-                    From
+                    From (Worldwide)
                   </label>
-                  <Input
-                    type="text"
-                    placeholder="South Africa"
-                    value={fromLocation}
-                    onChange={(e) => setFromLocation(e.target.value)}
-                    className="bg-background border-border focus:border-primary transition-colors"
-                  />
+                  <Popover open={originOpen} onOpenChange={setOriginOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={originOpen}
+                        className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
+                      >
+                        {fromLocation ? `${fromLocation.city} (${fromLocation.iata_code})` : "Select departure airport..."}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[400px] p-0 bg-background border-border z-50" align="start">
+                      <Command className="bg-background" shouldFilter={false}>
+                        <CommandInput 
+                          placeholder="Search city, airport, or code..." 
+                          className="h-9"
+                          value={fromSearchQuery}
+                          onValueChange={setFromSearchQuery}
+                        />
+                        <CommandList className="max-h-[300px]">
+                          {isFromSearching ? (
+                            <div className="flex items-center justify-center py-8">
+                              <Loader2 className="w-5 h-5 animate-spin text-primary" />
+                              <span className="ml-2 text-sm text-muted-foreground">Searching airports...</span>
+                            </div>
+                          ) : fromSearchResults.length === 0 ? (
+                            <CommandEmpty>
+                              {fromSearchQuery.length < 2 
+                                ? "Type at least 2 characters to search..." 
+                                : "No airports found."}
+                            </CommandEmpty>
+                          ) : (
+                            <CommandGroup>
+                              {fromSearchResults.map((airport) => (
+                                <CommandItem
+                                  key={airport.id}
+                                  value={airport.iata_code}
+                                  onSelect={() => {
+                                    setFromLocation(airport);
+                                    setOriginOpen(false);
+                                    setFromSearchQuery('');
+                                  }}
+                                  className="cursor-pointer"
+                                >
+                                  <Check
+                                    className={cn(
+                                      "mr-2 h-4 w-4 shrink-0",
+                                      fromLocation?.id === airport.id ? "opacity-100" : "opacity-0"
+                                    )}
+                                  />
+                                  <div className="flex flex-col">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-semibold">{airport.city}</span>
+                                      <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
+                                        {airport.iata_code}
+                                      </span>
+                                    </div>
+                                    <span className="text-xs text-muted-foreground">
+                                      {airport.name}, {airport.country}
+                                    </span>
+                                  </div>
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          )}
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </div>
                 
                 <div className="space-y-2">
@@ -269,31 +382,31 @@ const Hero = () => {
                         <CommandInput 
                           placeholder="Search city, airport, or code..." 
                           className="h-9"
-                          value={airportSearchQuery}
-                          onValueChange={setAirportSearchQuery}
+                          value={toSearchQuery}
+                          onValueChange={setToSearchQuery}
                         />
                         <CommandList className="max-h-[300px]">
-                          {isSearching ? (
+                          {isToSearching ? (
                             <div className="flex items-center justify-center py-8">
                               <Loader2 className="w-5 h-5 animate-spin text-primary" />
                               <span className="ml-2 text-sm text-muted-foreground">Searching airports...</span>
                             </div>
-                          ) : searchResults.length === 0 ? (
+                          ) : toSearchResults.length === 0 ? (
                             <CommandEmpty>
-                              {airportSearchQuery.length < 2 
+                              {toSearchQuery.length < 2 
                                 ? "Type at least 2 characters to search..." 
                                 : "No airports found."}
                             </CommandEmpty>
                           ) : (
                             <CommandGroup>
-                              {searchResults.map((airport) => (
+                              {toSearchResults.map((airport) => (
                                 <CommandItem
                                   key={airport.id}
                                   value={airport.iata_code}
                                   onSelect={() => {
                                     setToLocation(airport);
                                     setDestinationOpen(false);
-                                    setAirportSearchQuery('');
+                                    setToSearchQuery('');
                                   }}
                                   className="cursor-pointer"
                                 >
