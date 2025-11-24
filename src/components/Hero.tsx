@@ -18,22 +18,22 @@ const Hero = () => {
           transform: `translateY(${offset}px)`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/80"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-secondary/90 via-secondary/80 to-secondary/90"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10 py-20">
         <div className="max-w-4xl mx-auto text-center mb-12 animate-fade-in-up">
-          <h1 className="text-5xl md:text-6xl font-bold text-accent mb-6 drop-shadow-2xl">
+          <h1 className="text-5xl md:text-6xl font-bold text-primary mb-6 drop-shadow-lg">
             Fly Smoothly from South Africa to the World
           </h1>
-          <p className="text-xl md:text-2xl text-foreground/90 drop-shadow-lg">
+          <p className="text-xl md:text-2xl text-foreground drop-shadow-md">
             Best Fares, Visit Visas, and Online PAK ID Services at your fingertips
           </p>
         </div>
         
-        <Card className="max-w-3xl mx-auto p-8 bg-card/95 backdrop-blur-sm border-2 border-accent/30 shadow-2xl shadow-accent/20 animate-scale-in">
+        <Card className="max-w-3xl mx-auto p-8 bg-card border-2 border-border shadow-2xl animate-scale-in">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Plane className="w-6 h-6 text-accent" />
+            <Plane className="w-6 h-6 text-primary" />
             <h3 className="text-2xl font-bold text-center text-foreground">Find Your Perfect Flight</h3>
           </div>
           
@@ -41,26 +41,26 @@ const Hero = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <MapPin className="w-4 h-4 text-accent" />
+                  <MapPin className="w-4 h-4 text-primary" />
                   From
                 </label>
                 <Input
                   type="text"
                   placeholder="South Africa"
                   defaultValue="South Africa"
-                  className="bg-background border-border focus:border-accent transition-colors"
+                  className="bg-background border-border focus:border-primary transition-colors"
                 />
               </div>
               
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <MapPin className="w-4 h-4 text-accent" />
+                  <MapPin className="w-4 h-4 text-primary" />
                   To (Worldwide)
                 </label>
                 <Input
                   type="text"
                   placeholder="Enter any destination..."
-                  className="bg-background border-border focus:border-accent transition-colors"
+                  className="bg-background border-border focus:border-primary transition-colors"
                 />
               </div>
             </div>
@@ -68,22 +68,22 @@ const Hero = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <Calendar className="w-4 h-4 text-accent" />
+                  <Calendar className="w-4 h-4 text-primary" />
                   Departure Date
                 </label>
                 <Input 
                   type="date" 
-                  className="bg-background border-border focus:border-accent transition-colors"
+                  className="bg-background border-border focus:border-primary transition-colors"
                 />
               </div>
               
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <Users className="w-4 h-4 text-accent" />
+                  <Users className="w-4 h-4 text-primary" />
                   Passengers
                 </label>
                 <Select defaultValue="1">
-                  <SelectTrigger className="bg-background border-border focus:border-accent">
+                  <SelectTrigger className="bg-background border-border focus:border-primary">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
