@@ -39,7 +39,7 @@ const Services = () => {
     <section id="services" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in-up">
-          <p className="text-sm font-semibold text-primary uppercase tracking-wide mb-2">
+          <p className="text-sm font-semibold text-foreground uppercase tracking-wide mb-2">
             Our Service
           </p>
           <h2 className="text-3xl md:text-5xl font-bold text-foreground">Our Premium Services</h2>
