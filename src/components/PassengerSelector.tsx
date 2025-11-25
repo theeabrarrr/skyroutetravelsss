@@ -37,11 +37,12 @@ export const PassengerSelector = ({ passengers, onChange }: PassengerSelectorPro
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          className="w-full justify-start text-left font-normal bg-background border-border hover:border-primary transition-colors"
+          variant="ghost"
+          className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
         >
-          <Users className="w-4 h-4 text-primary mr-2" />
-          <span className="flex-1">{getDisplayText()}</span>
+          <span className="text-base font-semibold text-foreground">
+            {totalPassengers} Traveler{totalPassengers > 1 ? 's' : ''}
+          </span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 p-4 bg-card border-border" align="start">
