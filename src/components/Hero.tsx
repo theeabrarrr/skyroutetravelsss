@@ -487,7 +487,7 @@ const Hero = () => {
                 <div className="p-4 flex items-center">
                 <Button
                   onClick={handleGetQuote}
-                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-base font-bold shadow-md hover:shadow-lg transition-all"
+                  className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-lg font-bold shadow-md hover:shadow-lg transition-all px-6"
                 >
                   Get your best quote
                 </Button>
