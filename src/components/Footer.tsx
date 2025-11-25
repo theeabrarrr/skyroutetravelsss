@@ -4,24 +4,24 @@ import { Input } from "@/components/ui/input";
 
 const Footer = () => {
   return (
-    <footer id="contact" className="bg-primary text-primary-foreground pt-16 pb-8 border-t border-accent/20">
+    <footer id="contact" className="bg-foreground text-background pt-16 pb-8 border-t border-border">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-accent mb-4">Sky Route Travel & Tours</h3>
-            <p className="text-white/90 leading-relaxed">
+            <p className="text-background/90 leading-relaxed">
               Your trusted partner for seamless travel experiences from South Africa to the world. We make your journey extraordinary.
             </p>
             <div className="space-y-3 pt-4">
-              <div className="flex items-center gap-3 text-white/90 hover:text-accent transition-colors">
+              <div className="flex items-center gap-3 text-background/90 hover:text-accent transition-colors">
                 <Phone className="w-5 h-5 text-accent flex-shrink-0" />
                 <span>+27 74 271 8975</span>
               </div>
-              <div className="flex items-center gap-3 text-white/90 hover:text-accent transition-colors">
+              <div className="flex items-center gap-3 text-background/90 hover:text-accent transition-colors">
                 <Mail className="w-5 h-5 text-accent flex-shrink-0" />
                 <span>skyroutetraveltours@gmail.com</span>
               </div>
-              <div className="flex items-center gap-3 text-white/90 hover:text-accent transition-colors">
+              <div className="flex items-center gap-3 text-background/90 hover:text-accent transition-colors">
                 <MapPin className="w-5 h-5 text-accent flex-shrink-0" />
                 <span>Pretoria, South Africa</span>
               </div>
@@ -31,35 +31,35 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold text-accent mb-4">Quick Links</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-white/90 hover:text-accent transition-colors">About Us</a></li>
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Our Services</a></li>
-              <li><a href="#deals" className="text-white/90 hover:text-accent transition-colors">Destinations</a></li>
-              <li><a href="#contact" className="text-white/90 hover:text-accent transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-white/90 hover:text-accent transition-colors">Privacy Policy</a></li>
+              <li><a href="#" className="text-background/90 hover:text-accent transition-colors">About Us</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Our Services</a></li>
+              <li><a href="#deals" className="text-background/90 hover:text-accent transition-colors">Destinations</a></li>
+              <li><a href="#contact" className="text-background/90 hover:text-accent transition-colors">Contact Us</a></li>
+              <li><a href="#" className="text-background/90 hover:text-accent transition-colors">Privacy Policy</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-bold text-accent mb-4">Services</h4>
             <ul className="space-y-3">
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Flight Booking</a></li>
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Visa Services</a></li>
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Passport & ID</a></li>
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Travel Insurance</a></li>
-              <li><a href="#services" className="text-white/90 hover:text-accent transition-colors">Hotel Booking</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Flight Booking</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Visa Services</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Passport & ID</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Travel Insurance</a></li>
+              <li><a href="#services" className="text-background/90 hover:text-accent transition-colors">Hotel Booking</a></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-bold text-accent mb-4">Newsletter</h4>
-            <p className="text-white/90 mb-4 leading-relaxed">
+            <p className="text-background/90 mb-4 leading-relaxed">
               Subscribe to get exclusive deals and travel updates
             </p>
             <div className="space-y-3">
               <Input 
                 type="email" 
                 placeholder="Your email address" 
-                className="bg-background/10 border-accent/30 text-white placeholder:text-white/50 focus:border-accent"
+                className="bg-background/10 border-border text-background placeholder:text-background/50 focus:border-accent"
               />
               <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90 font-semibold">
                 Subscribe
@@ -67,20 +67,20 @@ const Footer = () => {
             </div>
             <div className="flex gap-4 mt-6">
               <a href="#" className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
-                <Facebook className="w-5 h-5 text-white hover:text-accent-foreground" />
+                <Facebook className="w-5 h-5 text-background hover:text-accent-foreground" />
               </a>
               <a href="#" className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
-                <Instagram className="w-5 h-5 text-white hover:text-accent-foreground" />
+                <Instagram className="w-5 h-5 text-background hover:text-accent-foreground" />
               </a>
               <a href="#" className="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center hover:bg-accent transition-all duration-300 hover:scale-110">
-                <Twitter className="w-5 h-5 text-white hover:text-accent-foreground" />
+                <Twitter className="w-5 h-5 text-background hover:text-accent-foreground" />
               </a>
             </div>
           </div>
         </div>
         
-        <div className="border-t border-accent/20 pt-8 text-center">
-          <p className="text-white/70">
+        <div className="border-t border-background/20 pt-8 text-center">
+          <p className="text-background/70">
             © {new Date().getFullYear()} Sky Route Travel & Tours. All rights reserved. | Licensed Travel Agency
           </p>
         </div>

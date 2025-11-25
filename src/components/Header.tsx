@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-primary text-primary-foreground py-4 sticky top-0 z-50 shadow-lg backdrop-blur-sm bg-primary/95 border-b border-accent/20">
+      <header className="bg-background text-foreground py-4 sticky top-0 z-50 shadow-md border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -17,23 +17,23 @@ const Header = () => {
             </div>
             
             <nav className="hidden md:flex items-center gap-6">
-              <a href="#" className="relative hover:text-accent transition-colors group">
+              <a href="#" className="relative text-foreground hover:text-accent transition-colors group font-medium">
                 Home
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#deals" className="relative hover:text-accent transition-colors group">
+              <a href="#deals" className="relative text-foreground hover:text-accent transition-colors group font-medium">
                 Destinations
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#services" className="relative hover:text-accent transition-colors group">
+              <a href="#services" className="relative text-foreground hover:text-accent transition-colors group font-medium">
                 Visa Services
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#services" className="relative hover:text-accent transition-colors group">
+              <a href="#services" className="relative text-foreground hover:text-accent transition-colors group font-medium">
                 Passport/ID Services
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
-              <a href="#contact" className="relative hover:text-accent transition-colors group">
+              <a href="#contact" className="relative text-foreground hover:text-accent transition-colors group font-medium">
                 Contact
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"></span>
               </a>
@@ -57,7 +57,7 @@ const Header = () => {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-accent hover:text-accent/80"
+                className="md:hidden text-foreground hover:text-accent"
                 onClick={() => setIsMobileMenuOpen(true)}
               >
                 <Menu className="w-6 h-6" />

@@ -23,8 +23,6 @@ const features = [{
 }];
 const WhyChooseUs = () => {
   return <section className="py-20 bg-background relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 to-transparent"></div>
-      
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16 animate-fade-in-up">
           <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-2">

@@ -7,7 +7,7 @@ const partners = [
 
 const PartnersBar = () => {
   return (
-    <section className="py-12 bg-secondary/20 border-y border-border">
+    <section className="py-12 bg-background border-y border-border">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <p className="text-sm font-semibold text-accent uppercase tracking-wide mb-2">
