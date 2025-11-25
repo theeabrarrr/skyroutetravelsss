@@ -483,30 +483,29 @@ const Hero = () => {
                   />
                 </div>
 
-                {/* Search Button */}
-                <div className="p-4 flex items-center">
+                {/* Action Buttons */}
+                <div className="p-4 flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full h-[60px] w-[60px] bg-white border-2 border-border shadow-md hover:bg-accent hover:text-accent-foreground shrink-0"
+                  onClick={() => {
+                    const temp = fromLocation;
+                    setFromLocation(toLocation);
+                    setToLocation(temp);
+                  }}
+                >
+                  <ArrowLeftRight className="h-5 w-5" />
+                </Button>
                 <Button
                   onClick={handleGetQuote}
                   className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-lg font-bold shadow-md hover:shadow-lg transition-all px-6"
                 >
                   Get your best quote
                 </Button>
-                </div>
+              </div>
               </div>
 
-              {/* Swap Button - Desktop Only */}
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute left-[calc(40%-20px)] top-1/2 -translate-y-1/2 z-10 hidden lg:block rounded-full h-10 w-10 bg-white border-2 border-border shadow-md hover:bg-accent hover:text-accent-foreground"
-                onClick={() => {
-                  const temp = fromLocation;
-                  setFromLocation(toLocation);
-                  setToLocation(temp);
-                }}
-              >
-                <ArrowLeftRight className="h-4 w-4" />
-              </Button>
             </div>
           </Card>
 
