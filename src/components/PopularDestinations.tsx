@@ -68,7 +68,7 @@ const DestinationCard = ({ destination, index }: { destination: typeof destinati
         <p className="text-muted-foreground leading-relaxed mb-6">{destination.description}</p>
         <Button 
           variant="outline" 
-          className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+          className="w-full border-accent text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-300"
         >
           Explore This Destination
         </Button>
