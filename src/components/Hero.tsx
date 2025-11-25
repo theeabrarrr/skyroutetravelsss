@@ -291,7 +291,7 @@ const Hero = () => {
           {/* Horizontal Search Bar */}
           <Card className="backdrop-blur-sm bg-white/95 border-white/20 shadow-2xl w-full max-w-6xl animate-fade-in-up">
             <div className="relative">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_2fr_1.5fr_1.5fr_0.75fr_auto] gap-0 divide-y md:divide-y-0 md:divide-x divide-border">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_2fr_1.5fr_1.5fr_auto_auto] gap-0 divide-y md:divide-y-0 md:divide-x divide-border">
                 {/* From Field */}
                 <div className="p-4">
                   <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
@@ -472,15 +472,30 @@ const Hero = () => {
                   </div>
                 )}
 
-                {/* Passengers */}
-                <div className="p-4">
-                  <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
-                    <Users className="w-3 h-3" /> Travelers
-                  </label>
-                  <PassengerSelector 
-                    passengers={passengerData}
-                    onChange={setPassengerData}
-                  />
+                {/* Passengers with Swap Button */}
+                <div className="p-4 flex items-start gap-2">
+                  <div className="flex-1">
+                    <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                      <Users className="w-3 h-3" /> Travelers
+                    </label>
+                    <PassengerSelector 
+                      passengers={passengerData}
+                      onChange={setPassengerData}
+                    />
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="hidden lg:flex rounded-full h-10 w-10 bg-white border-2 border-border shadow-md hover:bg-accent hover:text-accent-foreground mt-5"
+                    onClick={() => {
+                      const temp = fromLocation;
+                      setFromLocation(toLocation);
+                      setToLocation(temp);
+                    }}
+                    aria-label="Swap locations"
+                  >
+                    <ArrowLeftRight className="h-4 w-4" />
+                  </Button>
                 </div>
 
                 {/* Search Button */}
@@ -489,24 +504,10 @@ const Hero = () => {
                     onClick={handleGetQuote}
                     className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-lg font-bold shadow-md hover:shadow-lg transition-all px-6"
                   >
-                    Search Flights
+                    Get Your Best Quote
                   </Button>
                 </div>
               </div>
-
-              {/* Swap Button - Between From and To */}
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute left-[calc(40%-20px)] top-1/2 -translate-y-1/2 z-10 hidden lg:block rounded-full h-10 w-10 bg-white border-2 border-border shadow-md hover:bg-accent hover:text-accent-foreground"
-                onClick={() => {
-                  const temp = fromLocation;
-                  setFromLocation(toLocation);
-                  setToLocation(temp);
-                }}
-              >
-                <ArrowLeftRight className="h-4 w-4" />
-              </Button>
             </div>
           </Card>
 
