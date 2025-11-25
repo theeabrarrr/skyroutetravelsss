@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown, Loader2 } from "lucide-react";
+import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown, Loader2, ArrowLeftRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -260,44 +260,52 @@ const Hero = () => {
       </div>
       
       <div className="container mx-auto px-4 relative z-10 py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
-          {/* Left Column - Flight Search Form */}
-          <Card className="p-8 bg-card border-2 border-border shadow-2xl animate-scale-in">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <Plane className="w-6 h-6 text-primary" />
-              <h3 className="text-2xl font-bold text-center text-foreground">Find Your Perfect Flight</h3>
-            </div>
-            
-            <div className="space-y-6">
-              <Tabs value={tripType} onValueChange={(value) => setTripType(value as any)} className="w-full">
-                <TabsList className="grid w-full grid-cols-3 mb-2">
-                  <TabsTrigger value="one-way" className="text-sm">
-                    One Way
-                  </TabsTrigger>
-                  <TabsTrigger value="round-trip" className="text-sm">
-                    Round Trip
-                  </TabsTrigger>
-                  <TabsTrigger value="multi-city" className="text-sm">
-                    Multi-City
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    From (Worldwide)
+        <div className="flex flex-col items-center gap-8 max-w-7xl mx-auto">
+          
+          {/* Trip Type Tabs */}
+          <div className="backdrop-blur-sm bg-white/90 rounded-full px-6 py-3 shadow-lg animate-scale-in">
+            <Tabs value={tripType} onValueChange={(value) => setTripType(value as any)}>
+              <TabsList className="bg-transparent border-none h-auto p-0 gap-2">
+                <TabsTrigger 
+                  value="one-way" 
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                >
+                  One Way
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="round-trip"
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                >
+                  Round Trip
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="multi-city"
+                  className="rounded-full px-6 py-2 data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                >
+                  Multi-City
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+
+          {/* Horizontal Search Bar */}
+          <Card className="backdrop-blur-sm bg-white/95 border-white/20 shadow-2xl w-full max-w-6xl animate-fade-in-up">
+            <div className="relative">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_2fr_1.5fr_1.5fr_1.5fr_1.5fr] gap-0 divide-y md:divide-y-0 md:divide-x divide-border">
+                {/* From Field */}
+                <div className="p-4">
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                    <MapPin className="w-3 h-3" /> From
                   </label>
                   <Popover open={originOpen} onOpenChange={setOriginOpen}>
                     <PopoverTrigger asChild>
                       <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={originOpen}
-                        className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
+                        variant="ghost"
+                        className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
                       >
-                        {fromLocation ? `${fromLocation.city} (${fromLocation.iata_code})` : "Select departure airport..."}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <span className="text-base font-semibold text-foreground">
+                          {fromLocation ? `${fromLocation.city} (${fromLocation.iata_code})` : "From where?"}
+                        </span>
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[400px] p-0 bg-background border-border z-50" align="start">
@@ -359,22 +367,21 @@ const Hero = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-                
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    To (Worldwide)
+
+                {/* To Field */}
+                <div className="p-4">
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                    <MapPin className="w-3 h-3" /> To
                   </label>
                   <Popover open={destinationOpen} onOpenChange={setDestinationOpen}>
                     <PopoverTrigger asChild>
                       <Button
-                        variant="outline"
-                        role="combobox"
-                        aria-expanded={destinationOpen}
-                        className="w-full justify-between bg-background border-border hover:bg-background hover:border-primary transition-colors h-10 font-normal"
+                        variant="ghost"
+                        className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
                       >
-                        {toLocation ? `${toLocation.city} (${toLocation.iata_code})` : "Select destination..."}
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        <span className="text-base font-semibold text-foreground">
+                          {toLocation ? `${toLocation.city} (${toLocation.iata_code})` : "Where to?"}
+                        </span>
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-[400px] p-0 bg-background border-border z-50" align="start">
@@ -436,74 +443,91 @@ const Hero = () => {
                     </PopoverContent>
                   </Popover>
                 </div>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Calendar className="w-4 h-4 text-primary" />
-                    Departure Date
+
+                {/* Departure Date */}
+                <div className="p-4">
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                    <Calendar className="w-3 h-3" /> Departure
                   </label>
-                  <Input 
+                  <Input
                     type="date"
                     value={departureDate}
                     onChange={(e) => setDepartureDate(e.target.value)}
-                    className="bg-background border-border focus:border-primary transition-colors"
+                    className="border-0 px-0 h-auto text-base font-semibold focus-visible:ring-0 bg-transparent"
                   />
                 </div>
-                
+
+                {/* Return Date */}
                 {tripType !== 'one-way' && (
-                  <div className="space-y-2">
-                    <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                      <Calendar className="w-4 h-4 text-primary" />
-                      {tripType === 'round-trip' ? 'Return Date' : 'Arrival Date'}
+                  <div className="p-4">
+                    <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                      <Calendar className="w-3 h-3" /> Return
                     </label>
-                    <Input 
+                    <Input
                       type="date"
                       value={returnDate}
                       onChange={(e) => setReturnDate(e.target.value)}
-                      className="bg-background border-border focus:border-primary transition-colors"
+                      className="border-0 px-0 h-auto text-base font-semibold focus-visible:ring-0 bg-transparent"
                     />
                   </div>
                 )}
+
+                {/* Passengers */}
+                <div className="p-4">
+                  <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
+                    <Users className="w-3 h-3" /> Travelers
+                  </label>
+                  <PassengerSelector 
+                    passengers={passengerData}
+                    onChange={setPassengerData}
+                  />
+                </div>
+
+                {/* Search Button */}
+                <div className="p-4 flex items-center">
+                  <Button
+                    onClick={handleGetQuote}
+                    className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-base font-bold shadow-md hover:shadow-lg transition-all"
+                  >
+                    <Search className="w-5 h-5 mr-2" />
+                    Search
+                  </Button>
+                </div>
               </div>
-              
-              <div className="space-y-2">
-                <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  Passengers
-                </label>
-                <PassengerSelector 
-                  passengers={passengerData}
-                  onChange={setPassengerData}
-                />
-              </div>
-              
-              <Button 
-                onClick={handleGetQuote}
-                type="button"
-                className="w-full bg-accent text-accent-foreground hover:bg-accent/90 text-lg py-7 font-bold shadow-lg hover:shadow-accent/50 transition-all duration-300 hover:scale-[1.02]"
+
+              {/* Swap Button - Desktop Only */}
+              <Button
+                variant="outline"
+                size="icon"
+                className="absolute left-[calc(40%-20px)] top-1/2 -translate-y-1/2 z-10 hidden lg:block rounded-full h-10 w-10 bg-white border-2 border-border shadow-md hover:bg-accent hover:text-accent-foreground"
+                onClick={() => {
+                  const temp = fromLocation;
+                  setFromLocation(toLocation);
+                  setToLocation(temp);
+                }}
               >
-                Get Your Best Quote →
+                <ArrowLeftRight className="h-4 w-4" />
               </Button>
             </div>
           </Card>
 
-          {/* Right Column - Company Branding */}
-          <div className="space-y-8 animate-fade-in-up text-center lg:text-left">
-            <div>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-primary mb-4 drop-shadow-lg">
+          {/* Company Branding - Below Search Bar */}
+          <div className="backdrop-blur-md bg-white/80 p-8 rounded-2xl shadow-xl border border-white/20 max-w-4xl animate-fade-in-up"
+          >
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
                 Sky Route Travel & Tours
               </h1>
-              <p className="text-xl md:text-2xl text-foreground drop-shadow-md mb-8">
+              <p className="text-lg md:text-xl text-primary/80 mb-4">
                 Your Trusted Partner for Global Travel Excellence
               </p>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base text-muted-foreground">
                 Fly Smoothly from South Africa to the World with the Best Fares, Visit Visas, and Online PAK ID Services
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="flex flex-col items-center lg:items-start gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
+              <div className="flex flex-col items-center gap-2">
                 <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
                   <CheckCircle2 className="w-6 h-6 text-accent" />
                 </div>
@@ -513,7 +537,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center lg:items-start gap-2">
+              <div className="flex flex-col items-center gap-2">
                 <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
                   <Star className="w-6 h-6 text-accent" />
                 </div>
@@ -523,7 +547,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center lg:items-start gap-2">
+              <div className="flex flex-col items-center gap-2">
                 <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center">
                   <Award className="w-6 h-6 text-accent" />
                 </div>
@@ -532,12 +556,6 @@ const Hero = () => {
                   <div className="text-sm text-muted-foreground">Destinations</div>
                 </div>
               </div>
-            </div>
-
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <Button variant="outline" className="border-primary text-primary hover:bg-accent hover:text-accent-foreground hover:border-accent">
-                Learn More About Us
-              </Button>
             </div>
           </div>
         </div>
