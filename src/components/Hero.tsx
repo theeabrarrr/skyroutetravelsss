@@ -42,6 +42,8 @@ const Hero = () => {
   const [toLocation, setToLocation] = useState<Airport | null>(null);
   const [originOpen, setOriginOpen] = useState(false);
   const [destinationOpen, setDestinationOpen] = useState(false);
+  const [departureOpen, setDepartureOpen] = useState(false);
+  const [returnOpen, setReturnOpen] = useState(false);
   const [departureDate, setDepartureDate] = useState<Date | undefined>();
   const [returnDate, setReturnDate] = useState<Date | undefined>();
   const [passengerData, setPassengerData] = useState<PassengerCounts>({
@@ -450,7 +452,7 @@ const Hero = () => {
                   <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
                     <CalendarIcon className="w-3 h-3" /> Departure
                   </label>
-                  <Popover>
+                  <Popover open={departureOpen} onOpenChange={setDepartureOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
@@ -465,7 +467,10 @@ const Hero = () => {
                       <Calendar
                         mode="single"
                         selected={departureDate}
-                        onSelect={setDepartureDate}
+                        onSelect={(date) => {
+                          setDepartureDate(date);
+                          setDepartureOpen(false);
+                        }}
                         initialFocus
                         disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
                         className="pointer-events-auto"
@@ -480,7 +485,7 @@ const Hero = () => {
                     <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
                       <CalendarIcon className="w-3 h-3" /> Return
                     </label>
-                    <Popover>
+                    <Popover open={returnOpen} onOpenChange={setReturnOpen}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="ghost"
@@ -495,7 +500,10 @@ const Hero = () => {
                         <Calendar
                           mode="single"
                           selected={returnDate}
-                          onSelect={setReturnDate}
+                          onSelect={(date) => {
+                            setReturnDate(date);
+                            setReturnOpen(false);
+                          }}
                           initialFocus
                           disabled={(date) => {
                             const today = new Date(new Date().setHours(0, 0, 0, 0));
