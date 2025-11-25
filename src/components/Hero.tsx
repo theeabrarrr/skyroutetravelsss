@@ -291,7 +291,7 @@ const Hero = () => {
           {/* Horizontal Search Bar */}
           <Card className="backdrop-blur-sm bg-white/95 border-white/20 shadow-2xl w-full max-w-6xl animate-fade-in-up">
             <div className="relative">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_2fr_1fr_1fr_1fr_auto] gap-0 divide-y md:divide-y-0 md:divide-x divide-border">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_2fr_1.5fr_1.5fr_0.75fr_auto] gap-0 divide-y md:divide-y-0 md:divide-x divide-border">
                 {/* From Field */}
                 <div className="p-4">
                   <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
