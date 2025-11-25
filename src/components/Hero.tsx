@@ -448,7 +448,7 @@ const Hero = () => {
                 </div>
 
                 {/* Departure Date */}
-                <div className={`p-4 ${tripType === 'one-way' ? 'lg:col-span-2' : ''}`}>
+                <div className={cn("p-4", tripType === 'one-way' && "lg:col-span-1")}>
                   <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
                     <CalendarIcon className="w-3 h-3" /> Departure
                   </label>
@@ -480,7 +480,7 @@ const Hero = () => {
                 </div>
 
                 {/* Return Date */}
-                {tripType !== 'one-way' && (
+                {tripType === 'round-trip' && (
                   <div className="p-4">
                     <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
                       <CalendarIcon className="w-3 h-3" /> Return
@@ -543,10 +543,10 @@ const Hero = () => {
                 </div>
 
                 {/* Search Button */}
-                <div className="p-4 flex items-center">
+                <div className="p-4 flex items-center justify-center">
                   <Button
                     onClick={handleGetQuote}
-                    className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-lg font-bold shadow-md hover:shadow-lg transition-all px-6"
+                    className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-base font-bold shadow-md hover:shadow-lg transition-all whitespace-nowrap"
                   >
                     Get Your Best Quote
                   </Button>
