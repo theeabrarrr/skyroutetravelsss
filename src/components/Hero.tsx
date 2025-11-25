@@ -266,7 +266,7 @@ const Hero = () => {
         <div className="flex flex-col items-center gap-4 max-w-7xl mx-auto">
           
           {/* Trip Type Tabs - Small tabs above the search bar */}
-          <div className="flex justify-start w-full max-w-6xl">
+          <div className="flex justify-center w-full max-w-6xl">
             <Tabs value={tripType} onValueChange={(value) => setTripType(value as any)}>
               <TabsList className="bg-background border border-border h-auto p-1">
                 <TabsTrigger 
@@ -531,9 +531,9 @@ const Hero = () => {
                 <div className="p-3 flex items-center w-full lg:w-auto">
                   <Button
                     onClick={handleGetQuote}
-                    className="w-full lg:w-auto bg-accent text-accent-foreground hover:bg-accent/90 h-[50px] px-8 text-base font-semibold shadow-md hover:shadow-lg transition-all"
+                    className="w-full lg:w-auto bg-accent text-accent-foreground hover:bg-accent/90 h-[50px] px-10 text-base font-semibold shadow-md hover:shadow-lg transition-all"
                   >
-                    Search
+                    Get Your Best Quote
                   </Button>
                 </div>
               </div>
@@ -544,7 +544,7 @@ const Hero = () => {
           <div className="bg-background p-8 rounded-2xl shadow-lg border border-border max-w-4xl animate-fade-in-up"
           >
             <div className="text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4">
                 Sky Route Travel & Tours
               </h1>
               <p className="text-lg md:text-xl text-foreground mb-4">
@@ -561,7 +561,7 @@ const Hero = () => {
                   <CheckCircle2 className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-primary">15+</div>
+                  <div className="text-2xl font-bold text-foreground">15+</div>
                   <div className="text-sm text-muted-foreground">Years Experience</div>
                 </div>
               </div>
@@ -571,7 +571,7 @@ const Hero = () => {
                   <Star className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-primary">50K+</div>
+                  <div className="text-2xl font-bold text-foreground">50K+</div>
                   <div className="text-sm text-muted-foreground">Happy Travelers</div>
                 </div>
               </div>
@@ -581,7 +581,7 @@ const Hero = () => {
                   <Award className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-primary">100+</div>
+                  <div className="text-2xl font-bold text-foreground">100+</div>
                   <div className="text-sm text-muted-foreground">Destinations</div>
                 </div>
               </div>
