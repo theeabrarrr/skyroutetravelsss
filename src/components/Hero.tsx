@@ -489,7 +489,6 @@ const Hero = () => {
                   onClick={handleGetQuote}
                   className="w-full bg-accent text-accent-foreground hover:bg-accent/90 h-full min-h-[60px] text-base font-bold shadow-md hover:shadow-lg transition-all"
                 >
-                  <Search className="w-5 h-5 mr-2" />
                   Get your best quote
                 </Button>
                 </div>
