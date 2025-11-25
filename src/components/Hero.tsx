@@ -271,19 +271,19 @@ const Hero = () => {
               <TabsList className="bg-background border border-border h-auto p-1">
                 <TabsTrigger 
                   value="one-way" 
-                  className="text-sm px-4 py-1.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="text-sm px-4 py-1.5 data-[state=active]:bg-accent data-[state=active]:text-foreground"
                 >
                   One Way
                 </TabsTrigger>
                 <TabsTrigger 
                   value="round-trip"
-                  className="text-sm px-4 py-1.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="text-sm px-4 py-1.5 data-[state=active]:bg-accent data-[state=active]:text-foreground"
                 >
                   Round Trip
                 </TabsTrigger>
                 <TabsTrigger 
                   value="multi-city"
-                  className="text-sm px-4 py-1.5 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+                  className="text-sm px-4 py-1.5 data-[state=active]:bg-accent data-[state=active]:text-foreground"
                 >
                   Multi-City
                 </TabsTrigger>
