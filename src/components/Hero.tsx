@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MapPin, Calendar, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown, Loader2, ArrowLeftRight, Search, Users } from "lucide-react";
+import { MapPin, Calendar as CalendarIcon, Plane, CheckCircle2, Star, Award, Check, ChevronsUpDown, Loader2, ArrowLeftRight, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -17,6 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import heroImage from "@/assets/hero-airplane.jpg";
 import { useParallax } from "@/hooks/use-parallax";
@@ -40,8 +42,8 @@ const Hero = () => {
   const [toLocation, setToLocation] = useState<Airport | null>(null);
   const [originOpen, setOriginOpen] = useState(false);
   const [destinationOpen, setDestinationOpen] = useState(false);
-  const [departureDate, setDepartureDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
+  const [departureDate, setDepartureDate] = useState<Date | undefined>();
+  const [returnDate, setReturnDate] = useState<Date | undefined>();
   const [passengerData, setPassengerData] = useState<PassengerCounts>({
     adults: 1,
     children: 0,
@@ -163,9 +165,8 @@ const Hero = () => {
     }
 
     // Format dates for display (DD/MM/YYYY)
-    const formatDate = (dateString: string) => {
-      if (!dateString) return '';
-      const date = new Date(dateString);
+    const formatDate = (date: Date | undefined) => {
+      if (!date) return '';
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
@@ -213,8 +214,8 @@ const Hero = () => {
           from_airport_id: fromLocation.id,
           to_location: toLocation.city,
           to_airport_id: toLocation.id,
-          departure_date: departureDate,
-          return_date: tripType === 'round-trip' ? returnDate : null,
+          departure_date: departureDate ? format(departureDate, 'yyyy-MM-dd') : '',
+          return_date: tripType === 'round-trip' && returnDate ? format(returnDate, 'yyyy-MM-dd') : null,
           adults: passengerData.adults,
           children: passengerData.children,
           infants: passengerData.infants,
@@ -447,28 +448,63 @@ const Hero = () => {
                 {/* Departure Date */}
                 <div className={`p-4 ${tripType === 'one-way' ? 'lg:col-span-2' : ''}`}>
                   <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
-                    <Calendar className="w-3 h-3" /> Departure
+                    <CalendarIcon className="w-3 h-3" /> Departure
                   </label>
-                  <Input
-                    type="date"
-                    value={departureDate}
-                    onChange={(e) => setDepartureDate(e.target.value)}
-                    className="border-0 px-0 h-auto text-base font-semibold focus-visible:ring-0 bg-transparent"
-                  />
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
+                      >
+                        <span className="text-base font-semibold text-foreground">
+                          {departureDate ? format(departureDate, "PPP") : <span className="text-muted-foreground">Select date</span>}
+                        </span>
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={departureDate}
+                        onSelect={setDepartureDate}
+                        initialFocus
+                        disabled={(date) => date < new Date(new Date().setHours(0, 0, 0, 0))}
+                        className="pointer-events-auto"
+                      />
+                    </PopoverContent>
+                  </Popover>
                 </div>
 
                 {/* Return Date */}
                 {tripType !== 'one-way' && (
                   <div className="p-4">
                     <label className="text-xs font-semibold text-muted-foreground mb-1 block flex items-center gap-1">
-                      <Calendar className="w-3 h-3" /> Return
+                      <CalendarIcon className="w-3 h-3" /> Return
                     </label>
-                    <Input
-                      type="date"
-                      value={returnDate}
-                      onChange={(e) => setReturnDate(e.target.value)}
-                      className="border-0 px-0 h-auto text-base font-semibold focus-visible:ring-0 bg-transparent"
-                    />
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
+                        >
+                          <span className="text-base font-semibold text-foreground">
+                            {returnDate ? format(returnDate, "PPP") : <span className="text-muted-foreground">Select date</span>}
+                          </span>
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={returnDate}
+                          onSelect={setReturnDate}
+                          initialFocus
+                          disabled={(date) => {
+                            const today = new Date(new Date().setHours(0, 0, 0, 0));
+                            return date < (departureDate || today);
+                          }}
+                          className="pointer-events-auto"
+                        />
+                      </PopoverContent>
+                    </Popover>
                   </div>
                 )}
 
