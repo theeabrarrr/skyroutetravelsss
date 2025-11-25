@@ -40,7 +40,7 @@ export const PassengerSelector = ({ passengers, onChange }: PassengerSelectorPro
           variant="ghost"
           className="w-full justify-start px-0 h-auto font-normal hover:bg-transparent"
         >
-          <span className="text-base font-semibold text-foreground">
+          <span className="text-sm font-medium text-foreground truncate">
             {totalPassengers} Traveler{totalPassengers > 1 ? 's' : ''}
           </span>
         </Button>
