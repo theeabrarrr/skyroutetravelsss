@@ -541,13 +541,13 @@ const Hero = () => {
           </Card>
 
           {/* Company Branding - Below Search Bar */}
-          <div className="backdrop-blur-md bg-white/80 p-8 rounded-2xl shadow-xl border border-white/20 max-w-4xl animate-fade-in-up"
+          <div className="bg-background p-8 rounded-2xl shadow-lg border border-border max-w-4xl animate-fade-in-up"
           >
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4">
                 Sky Route Travel & Tours
               </h1>
-              <p className="text-lg md:text-xl text-primary/80 mb-4">
+              <p className="text-lg md:text-xl text-foreground mb-4">
                 Your Trusted Partner for Global Travel Excellence
               </p>
               <p className="text-base text-muted-foreground">
